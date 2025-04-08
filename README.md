@@ -41,7 +41,9 @@ System.InvalidOperationException:“Operation is not valid due to the current st
 
 5、收到一次回复后，心跳循环停止（_client.Online=False)，没有异常报出来，HeartbeatLoop里catch不到
 
-6、在Filter方法里加断点，再恢复执行，能复现这个异常
+6、在Filter方法里加断点，等1-2s 再点继续 恢复执行，能复现这个异常
+
+到达断点后，快速地点继续，没报异常串口直接断开
 
 ![image](https://github.com/user-attachments/assets/665e451d-3582-45ed-ae6c-f86b52b05d69)
 
