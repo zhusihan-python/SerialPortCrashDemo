@@ -20,6 +20,9 @@
 ![image](https://github.com/user-attachments/assets/582839d5-60e7-4f81-9f7d-355231dcfdb3)
 
 5、运行一段时间后报异常
+
+System.InvalidOperationException:“Operation is not valid due to the current state of the object.”
+
 ![1744099649272](https://github.com/user-attachments/assets/1a76dcbf-6b8f-4613-9276-6b33b7e94800)
 
 异常堆栈：
@@ -33,10 +36,9 @@
 在 System.Threading.ThreadPoolWorkQueue.Dispatch() 在 /_/src/libraries/System.Private.CoreLib/src/System/Threading/ThreadPoolWorkQueue.cs 中: 第 1010 行
 在 System.Threading.PortableThreadPool.WorkerThread.WorkerThreadStart() 在 /_/src/libraries/System.Private.CoreLib/src/System/Threading/PortableThreadPool.WorkerThread.NonBrowser.cs 中: 第 102 行
 ```
-快速监视
-
-![Uploading image.png…]()
 
 两个类似的runtime的bug
+
 https://github.com/dotnet/runtime/issues/55249
+
 https://github.com/dotnet/runtime/issues/68623
