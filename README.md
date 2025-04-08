@@ -1,4 +1,4 @@
-原始的报错是和串口设备交互 运行一段时间后报异常
+原始的报错是和串口设备mcu交互 运行一段时间(几分钟)后报异常
 
 System.InvalidOperationException:“Operation is not valid due to the current state of the object.”
 
@@ -16,7 +16,7 @@ System.InvalidOperationException:“Operation is not valid due to the current st
 在 System.Threading.PortableThreadPool.WorkerThread.WorkerThreadStart() 在 /_/src/libraries/System.Private.CoreLib/src/System/Threading/PortableThreadPool.WorkerThread.NonBrowser.cs 中: 第 102 行
 ```
 
-使用模拟串口，必现收到虚拟串口的回复后，连接就断开了
+使用模拟串口，必现收到虚拟串口的回复后，串口连接断开
 
 1、vspd添加虚拟串口对
 
@@ -39,9 +39,12 @@ System.InvalidOperationException:“Operation is not valid due to the current st
 4、运行demo连接串口对的另一个串口 此处为COM2
 ![image](https://github.com/user-attachments/assets/582839d5-60e7-4f81-9f7d-355231dcfdb3)
 
-5、收到一次回复，心跳循环已停止（client.Online=False)
+5、收到一次回复后，心跳循环停止（_client.Online=False)，没有异常报出来，HeartbeatLoop里catch不到
 
-6、在Filter方法里加断点，再恢复执行，也能复现这个异常
+6、在Filter方法里加断点，再恢复执行，能复现这个异常
+
+![image](https://github.com/user-attachments/assets/665e451d-3582-45ed-ae6c-f86b52b05d69)
+
 
 两个类似的runtime的bug
 
