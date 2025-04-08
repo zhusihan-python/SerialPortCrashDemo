@@ -23,7 +23,7 @@ public partial class MainWindow : Window
 
     private async Task InitializeComPortAsync()
     {
-        await this._comPort.InitializeAsync("COM3", 115200);
+        await this._comPort.InitializeAsync("COM2", 115200);
     }
 
     public string Text { get; set; } = string.Join(Environment.NewLine, Enumerable.Range(0, 1000).Select(i => $"Line {i}"));
