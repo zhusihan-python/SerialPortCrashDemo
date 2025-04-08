@@ -203,22 +203,27 @@ public class ComPort
 
 public class FrameSequenceGenerator
 {
-    private int _counter = 0; // 计数器，用于生成序号
-    private const int MaxSequence = 65535; // 最大序号值
+    //private int _counter = 0; // 计数器，用于生成序号
+    //private const int MaxSequence = 65535; // 最大序号值
 
-    // 生成下一个序号
+    //// 生成下一个序号
+    //public byte[] GenerateFrameSequence()
+    //{
+    //    // 计算下一个序号
+    //    _counter = (_counter % MaxSequence) + 1;
+
+    //    // 将序号转换为大端序的字节数组
+    //    byte[] sequenceBytes = BitConverter.GetBytes((ushort)_counter);
+    //    if (BitConverter.IsLittleEndian)
+    //    {
+    //        Array.Reverse(sequenceBytes); // 如果是小端序，反转字节数组
+    //    }
+
+    //    return sequenceBytes;
+    //}
     public byte[] GenerateFrameSequence()
     {
-        // 计算下一个序号
-        _counter = (_counter % MaxSequence) + 1;
-
-        // 将序号转换为大端序的字节数组
-        byte[] sequenceBytes = BitConverter.GetBytes((ushort)_counter);
-        if (BitConverter.IsLittleEndian)
-        {
-            Array.Reverse(sequenceBytes); // 如果是小端序，反转字节数组
-        }
-
+        byte[] sequenceBytes = new byte[] { 0x00, 0x01 };
         return sequenceBytes;
     }
 }
