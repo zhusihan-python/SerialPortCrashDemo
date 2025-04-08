@@ -1,3 +1,23 @@
+原始的报错是和串口设备交互 运行一段时间后报异常
+
+System.InvalidOperationException:“Operation is not valid due to the current state of the object.”
+
+![1744099649272](https://github.com/user-attachments/assets/1a76dcbf-6b8f-4613-9276-6b33b7e94800)
+
+异常堆栈：
+```
+在 System.ThrowHelper.ThrowInvalidOperationException() 在 /_/src/libraries/System.Private.CoreLib/src/System/ThrowHelper.cs 中: 第 343 行
+在 System.Threading.Tasks.Sources.ManualResetValueTaskSourceCore`1.SignalCompletion() 在 /_/src/libraries/System.Private.CoreLib/src/System/Threading/Tasks/Sources/ManualResetValueTaskSourceCore.cs 中: 第 214 行
+在 System.Threading.Tasks.Sources.ManualResetValueTaskSourceCore`1.SetException(Exception error) 在 /_/src/libraries/System.Private.CoreLib/src/System/Threading/Tasks/Sources/ManualResetValueTaskSourceCore.cs 中: 第 76 行
+在 TouchSocket.SerialPorts.SerialCore.SerialCore_DataReceived(Object sender, SerialDataReceivedEventArgs e)
+在 System.IO.Ports.SerialPort.CatchReceivedEvents(Object src, SerialDataReceivedEventArgs e)
+在 System.IO.Ports.SerialStream.EventLoopRunner.CallReceiveEvents(Object state)
+在 System.Threading.ThreadPoolWorkQueue.Dispatch() 在 /_/src/libraries/System.Private.CoreLib/src/System/Threading/ThreadPoolWorkQueue.cs 中: 第 1010 行
+在 System.Threading.PortableThreadPool.WorkerThread.WorkerThreadStart() 在 /_/src/libraries/System.Private.CoreLib/src/System/Threading/PortableThreadPool.WorkerThread.NonBrowser.cs 中: 第 102 行
+```
+
+使用模拟串口，必现收到虚拟串口的回复后，连接就断开了
+
 1、vspd添加虚拟串口对
 
 ![image](https://github.com/user-attachments/assets/62f757a8-8f6e-488e-9c56-bef6ceb05050)
@@ -19,23 +39,9 @@
 4、运行demo连接串口对的另一个串口 此处为COM2
 ![image](https://github.com/user-attachments/assets/582839d5-60e7-4f81-9f7d-355231dcfdb3)
 
-5、运行一段时间后报异常
+5、收到一次回复，心跳循环已停止（client.Online=False)
 
-System.InvalidOperationException:“Operation is not valid due to the current state of the object.”
-
-![1744099649272](https://github.com/user-attachments/assets/1a76dcbf-6b8f-4613-9276-6b33b7e94800)
-
-异常堆栈：
-```
-在 System.ThrowHelper.ThrowInvalidOperationException() 在 /_/src/libraries/System.Private.CoreLib/src/System/ThrowHelper.cs 中: 第 343 行
-在 System.Threading.Tasks.Sources.ManualResetValueTaskSourceCore`1.SignalCompletion() 在 /_/src/libraries/System.Private.CoreLib/src/System/Threading/Tasks/Sources/ManualResetValueTaskSourceCore.cs 中: 第 214 行
-在 System.Threading.Tasks.Sources.ManualResetValueTaskSourceCore`1.SetException(Exception error) 在 /_/src/libraries/System.Private.CoreLib/src/System/Threading/Tasks/Sources/ManualResetValueTaskSourceCore.cs 中: 第 76 行
-在 TouchSocket.SerialPorts.SerialCore.SerialCore_DataReceived(Object sender, SerialDataReceivedEventArgs e)
-在 System.IO.Ports.SerialPort.CatchReceivedEvents(Object src, SerialDataReceivedEventArgs e)
-在 System.IO.Ports.SerialStream.EventLoopRunner.CallReceiveEvents(Object state)
-在 System.Threading.ThreadPoolWorkQueue.Dispatch() 在 /_/src/libraries/System.Private.CoreLib/src/System/Threading/ThreadPoolWorkQueue.cs 中: 第 1010 行
-在 System.Threading.PortableThreadPool.WorkerThread.WorkerThreadStart() 在 /_/src/libraries/System.Private.CoreLib/src/System/Threading/PortableThreadPool.WorkerThread.NonBrowser.cs 中: 第 102 行
-```
+6、在Filter方法里加断点，再恢复执行，也能复现这个异常
 
 两个类似的runtime的bug
 
